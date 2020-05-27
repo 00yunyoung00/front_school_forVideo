@@ -22,7 +22,7 @@ const StudentList = ({ students, tempPage, lastPage, loading, error, nextPage, p
 
   const total=parseInt(students.length);
 
-  var startIndex = (tempPage - 1) * 10+1;
+  var startIndex = (tempPage - 1) * 10;
   var endIndex = Math.min(startIndex + 10, total);
 
   const pageStyle = {

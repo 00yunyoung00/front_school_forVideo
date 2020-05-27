@@ -63,12 +63,19 @@ const StudentListContainer = ({ match })=>{
     const onSelect = e =>{
         e.preventDefault();
         const { value, name } = e.target;
-        console.log(name)
-        console.log(students[name]);
-        if(students[name].state==='선발'){
-            students[name].state = '미선발';
-        }else{
-            students[name].state = '선발';
+        console.log(name);
+        for(var i=0; i<students.length; i++){
+            console.log(students[i].studentId);
+            if(students[i].studentId == name){
+                console.log("right")
+                if(students[i].state==='선발'){
+                    students[i].state = '미선발';
+                }else{
+                    students[i].state = '선발';
+                }
+                console.log(students[i]);
+                break;
+            }
         }
         dispatch(saveSelection(students));
     }
