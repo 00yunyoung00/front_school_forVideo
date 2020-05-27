@@ -19,10 +19,9 @@ const ScholarList = ({ scholars, tempPage, lastPage, loading, error, nextPage, p
     })
   }
 
-  console.log(scholars[1])
   if(searchWord){
     scholars=scholars.filter((scholars)=>{
-    return scholars.scholarshipName.indexOf(searchWord)>-1;
+    return scholars.scholarName.indexOf(searchWord)>-1;
     })
   }
 
@@ -31,13 +30,11 @@ const ScholarList = ({ scholars, tempPage, lastPage, loading, error, nextPage, p
 
   
     const scholarList = scholars.slice(startIndex, endIndex).map((scholars, index)=>(
-      <tr key={scholars.scholarshipId}>
-        <th style={{width:'50px'}} scope="row">{scholars.scholarshipId}</th>
-        <td style={{width:'1000px', textAlign:'left'}} ><Link to={`/scholars/${scholars.scholarshipId}`}><a style={{color:'black'}}>{scholars.scholarshipName}</a></Link></td>
+      <tr key={scholars.scholarId}>
+        <th style={{width:'50px'}} scope="row">{scholars.scholarId}</th>
+        <td style={{width:'1000px', textAlign:'left'}} ><Link to={`/scholars/${scholars.scholarId}`}><a style={{color:'black'}}>{scholars.scholarName}</a></Link></td>
       </tr>
     ));
-
-    console.log(scholarList);
 
     const pageStyle = {
       margin:'10px'

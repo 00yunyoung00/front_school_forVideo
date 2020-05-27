@@ -11,10 +11,23 @@ export const setExampleScholar = createAction(ADD_EXAMPLE_SCHOLAR, scholars=>sch
 export const setPage=createAction(SET_PAGE);
 
 
-const exampleScholar=[];
+const exampleScholar=[
+    {"scholarId":1,"scholarName":"선배라면","foundation":"이화여자대학교","sum":200,"dueDate":"2020-03-10","semesterStart":1,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":2,"scholarName":"EGPP","foundation":"이화여자대학교","sum":350,"dueDate":"2020-03-15","semesterStart":4,"semesterEnd":5,"majorLimit":"","gradeLimit":3.3},
+    {"scholarId":3,"scholarName":"이화미래설계","foundation":"이화여자대학교","sum":110,"dueDate":"2020-03-15","semesterStart":1,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":4,"scholarName":"신라면","foundation":"농심","sum":350,"dueDate":"2020-03-15","semesterStart":1,"semesterEnd":2,"majorLimit":"","gradeLimit":null},
+    {"scholarId":5,"scholarName":"농심장학금","foundation":"농심","sum":120,"dueDate":"2020-03-15","semesterStart":1,"semesterEnd":4,"majorLimit":"식품영양학과","gradeLimit":3},
+    {"scholarId":6,"scholarName":"이화복지","foundation":"이화여자대학교","sum":180,"dueDate":"2020-02-29","semesterStart":1,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":7,"scholarName":"김활란장학금","foundation":"이화여자대학교","sum":290,"dueDate":"2020-02-27","semesterStart":6,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":8,"scholarName":"오리온장학금","foundation":"오리온","sum":210,"dueDate":"2020-03-25","semesterStart":6,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":9,"scholarName":"아몬드장학금","foundation":"와사비","sum":260,"dueDate":"2020-03-25","semesterStart":6,"semesterEnd":8,"majorLimit":"","gradeLimit":null},
+    {"scholarId":10,"scholarName":"엘리장학금","foundation":"은별","sum":170,"dueDate":"2020-03-02","semesterStart":3,"semesterEnd":4,"majorLimit":"철학과","gradeLimit":null},
+    {"scholarId":11,"scholarName":"무지개장학금","foundation":"이화여자대학교","sum":190,"dueDate":"2020-03-05","semesterStart":3,"semesterEnd":4,"majorLimit":"","gradeLimit":null},
+    {"scholarId":12,"scholarName":"찰떡장학금","foundation":"갱린","sum":320,"dueDate":"2020-02-02","semesterStart":3,"semesterEnd":4,"majorLimit":"컴퓨터공학과","gradeLimit":null},
+];
 
-for(var i=0; i<45; i++){
-    exampleScholar.push({'scholarshipId':i, 'scholarshipName':'example Scholarship', 'state':'possible'},)
+for(var i=0; i<exampleScholar.length; i++){
+    exampleScholar[i].state='possible';
 }
 
 const initialState={

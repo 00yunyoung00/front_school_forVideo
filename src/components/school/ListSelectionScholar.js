@@ -15,7 +15,7 @@ const ListSelectionScholar = ({ scholars, tempPage, lastPage, loading, error, ne
 
   if(searchWord){
     scholars=scholars.filter((scholars)=>{
-      return scholars.title.indexOf(searchWord)>-1;
+      return scholars.scholarName.indexOf(searchWord)>-1;
     })
   }
 
@@ -30,11 +30,11 @@ const ListSelectionScholar = ({ scholars, tempPage, lastPage, loading, error, ne
   var endIndex = Math.min(startIndex + 10, total - 1);
 
   const applyList = scholars.slice(startIndex, endIndex).map((scholars, index)=>(
-    <tr key={scholars.scholarshipId}>
-    <th scope="row">{scholars.scholarshipId}</th>
-    <td style={{width:'600px'}}>{scholars.scholarshipName}</td>
+    <tr key={scholars.scholarId}>
+    <th scope="row">{scholars.scholarId}</th>
+    <td style={{width:'600px'}}>{scholars.scholarName}</td>
     <td style={{width:'100px'}}>{(scholars.state==='not possible')? "완료":"산정중"}</td>
-    <td><Link to={`/selections/${scholars.scholarshipId}`}><button>자세히보기</button></Link></td>
+    <td><Link to={`/selections/${scholars.scholarId}`}><button>자세히보기</button></Link></td>
     </tr>
   ));
 

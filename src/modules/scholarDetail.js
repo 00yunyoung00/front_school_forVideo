@@ -1,23 +1,13 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const SET_TOKEN=('scholar/SET_TOKEN');
+const SET_SCHOLAR=('scholar/SET_SCHOLAR');
 const UNLOAD_SCHOLAR = 'scholar/UNLOAD_POST';
 
 export const unloadScholar = createAction(UNLOAD_SCHOLAR);
-
-const exampleScholar={
-    'scholarshipName':'aa', 
-    'foundation':'이화여자대학교',
-    'createdDate':'2020-05-16', 
-    'maturityDateTime':'2020-05-23', 
-    'facevalue':'150', 
-    'gradeLimit':'3.5', 
-    'majorLimit':null,
-}
-
+export const setScholar = createAction(SET_SCHOLAR, scholar=>scholar);
 
 const initialState = {
-    scholar:exampleScholar,
+    scholar:null,
     error:null,
     token:null,
 };
@@ -25,6 +15,10 @@ const initialState = {
 const scholarDetail = handleActions(
     {
         [UNLOAD_SCHOLAR]:()=>initialState,
+        [SET_SCHOLAR]:(state, { payload:scholar })=>({
+            ...state,
+            scholar:scholar
+        }),
     },
     initialState,
 );
