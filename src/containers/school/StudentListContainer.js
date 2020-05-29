@@ -65,15 +65,12 @@ const StudentListContainer = ({ match })=>{
         const { value, name } = e.target;
         console.log(name);
         for(var i=0; i<students.length; i++){
-            console.log(students[i].studentId);
             if(students[i].studentId == name){
-                console.log("right")
                 if(students[i].state==='선발'){
                     students[i].state = '미선발';
                 }else{
                     students[i].state = '선발';
                 }
-                console.log(students[i]);
                 break;
             }
         }

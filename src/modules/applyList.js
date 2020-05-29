@@ -10,10 +10,44 @@ export const nextPage = createAction(NEXT_PAGE);
 export const prevPage = createAction(PREV_PAGE);
 export const setPage=createAction(SET_PAGE);
 
-const exampleApplies=[];
-for(var i=0; i<13; i++){
-    exampleApplies.push({'applyId':i, 'scholarshipName':'aa', 'completed':'true'});
-}
+const exampleApplies=[
+    {
+      "applyingId": 1,
+      "scholarName": "선배라면",
+      "scholarId": 1,
+      "state": "applyDone"
+    },
+    {
+      "applyingId": 2,
+      "scholarName": "EGPP",
+      "scholarId": 2,
+      "state": "applyDone"
+    },
+    {
+      "applyingId": 3,
+      "scholarName": "이화미래설계",
+      "scholarId": 3,
+      "state": "returned"
+    },
+    {
+      "applyingId": 4,
+      "scholarName": "신라면",
+      "scholarId": 4,
+      "state": "unselected"
+    },
+    {
+      "applyingId": 5,
+      "scholarName": "농심장학금",
+      "scholarId": 5,
+      "state": "unselected"
+    },
+    {
+      "applyingId": 6,
+      "scholarName": "이화복지",
+      "scholarId": 6,
+      "state": "selected"
+    }
+  ]
 
 const initialState={
     applies:exampleApplies,

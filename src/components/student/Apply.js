@@ -28,15 +28,20 @@ const Apply=({ applies, scholarship, scholarId, index})=>{
         <tr key="main" onClick={toggleExpander}>
             
              <th className="th" scope="row">{applies.applyId}</th>
-             <td><a className="applyId">{applies.applyId}<br/></a><a className="smalltitle">{applies.scholarshipName}</a></td>
+             <td><a className="applyId">{applies.applyId}<br/></a><a className="smalltitle">{applies.scholarName}</a></td>
     <td style={{width:'80px', verticalAlign:'middle'}}><a className="smallstate">
-        {(applies.completed)? (<Badge color="danger">반려</Badge>):(<Badge color="success">선정</Badge>)}
+        {
+            (applies.state==="unselected")? (<Badge color="danger">탈락</Badge>):
+                ((applies.state==="selected")? (<Badge color="success">선정</Badge>):(
+                    (applies.state==="applyDone")? (<Badge color="primary">신청완료</Badge>):(<Badge color="warning">반려</Badge>)
+                ))
+        }
            
     </a></td>
                 </tr>
       ,
       
-      (isOpen && (applies.completed))&& (
+      (isOpen && (applies.state==="returned"))&& (
           //state가 returned반려면 출력하게 할게요. 하지만 여기에선 state가 없으니 (applies.id%4==1)로 대체.
           /*(isOpen &&(applies.state==="returned"))&&(
             
