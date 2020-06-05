@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
 import loading from './loading'
-import register from './register'
 import notice from './notice';
 import notices from './noticeList';
 import applies from './applyList';
@@ -16,7 +15,6 @@ import search from './search';
 const rootReducer = combineReducers({
     auth,
     loading,
-    register,
     notice,
     notices,
     applies,

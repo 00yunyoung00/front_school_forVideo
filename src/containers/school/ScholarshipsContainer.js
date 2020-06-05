@@ -6,7 +6,7 @@ import ScholarshipList from '../../components/school/ScholarshipList';
 
 const ScholarshipsContainer = ()=>{
     const dispatch = useDispatch();
-    const { scholars, tempPage, lastPage, total, error, loading, searchWord, possible, token } = useSelector(({ scholars, loading, search })=>({
+    const { scholars, tempPage, lastPage, total, error, loading, searchWord, possible } = useSelector(({ scholars, loading, search })=>({
         scholars:scholars.scholars,
         tempPage:scholars.tempPage,
         lastPage:scholars.lastPage,

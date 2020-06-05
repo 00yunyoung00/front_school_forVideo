@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector, createDispatchHook } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { prevPage, nextPage, setExampleScholar, setPage } from '../../modules/scholarList';
+import { prevPage, nextPage, setPage } from '../../modules/scholarList';
 import ScholarList from '../../components/student/ScholarList';
 
 const ScholarListContainer = ()=>{
 
     const dispatch = useDispatch();
-    const { scholars, tempPage, lastPage, total, error, loading, searchWord, possible, token } = useSelector(({ scholars, loading, search })=>({
+    const { scholars, tempPage, lastPage, total, error, loading, searchWord, possible, } = useSelector(({ scholars, loading, search })=>({
         scholars:scholars.scholars,
         tempPage:scholars.tempPage,
         lastPage:scholars.lastPage,
@@ -17,7 +17,6 @@ const ScholarListContainer = ()=>{
         loading:loading['scholarList/LIST_SCHOLARS'],
         searchWord:search.searchWord,
         possible:search.possible,
-        token:scholars.token,
     }));
 
     useEffect(()=>{

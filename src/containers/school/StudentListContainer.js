@@ -9,7 +9,7 @@ const StudentListContainer = ({ match })=>{
     const scholarId = match.params.id;
 
     const dispatch = useDispatch();
-    const { students, selected, tempPage, lastPage, total, error, loading, searchWord, scholarState, token } = useSelector(({ students, loading, search })=>({
+    const { students, selected, tempPage, lastPage, total, error, loading, searchWord, scholarState } = useSelector(({ students, loading, search })=>({
         students:students.students,
         selected:students.selected,
         tempPage:students.tempPage,
@@ -19,8 +19,15 @@ const StudentListContainer = ({ match })=>{
         loading:loading['students/LIST_STUDENTS'],
         searchWord:search.searchWord,
         scholarState:students.scholarState,
-        token:students.token,
     }));
+
+    console.log(scholarId)
+    var tmpStudents=[];
+    for(var i=0; i<students.length; i++){
+        if(students[i].scholarId===scholarId){
+            tmpStudents.push(students[i]);
+        }
+    }
 
     const toNextPage = e =>{
         if(e){
@@ -84,7 +91,7 @@ const StudentListContainer = ({ match })=>{
 
 
     return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <StudentList students={students} tempPage={tempPage} lastPage={lastPage} loading={loading} error={error} 
+            <StudentList students={tmpStudents} tempPage={tempPage} lastPage={lastPage} loading={loading} error={error} 
                         nextPage={toNextPage} prevPage={toPrevPage} onChange={onChange} onSubmit={onSubmit} 
                         searchWord={searchWord} scholarId={scholarId} onSelect={onSelect} 
                         onScholarClose={onScholarClose} scholarState={scholarState}/>

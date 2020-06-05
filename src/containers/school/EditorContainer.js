@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { changeField, initialize, writeNotice, updateNotice, setInfo } from '../../modules/write';
+import { changeField, initialize, setInfo } from '../../modules/write';
 import EditorComponent from '../../components/school/EditorComponent';
 import { addNotice, setOriginal } from '../../modules/noticeList';
 
@@ -10,16 +10,12 @@ const EditorContainer = ({ history }) => {
     const date=new Date();
 
     const dispatch = useDispatch();
-    const { notices, title, body, noticeError, originalNoticeId, author, user, token } = useSelector(({ notices, write, auth })=>({
+    const { notices, title, body, originalNoticeId, author } = useSelector(({ notices, write, auth })=>({
         notices:notices.notices,
         title: write.title,
         body:write.body,
-        //notice:write.notice,
-        noticeError:write.noticeError,
         originalNoticeId: notices.originalNoticeId,
         author:write.author,
-        token:write.token,
-        user:auth.auth,
     }));
 
     for(var i=0; i<notices.length; i++){
@@ -70,25 +66,6 @@ const EditorContainer = ({ history }) => {
         }
     }
 
-
-    /*
-    useEffect(()=>{
-        return() => {
-            dispatch(initialize());
-        };
-    }, [dispatch, token]);*/
-    
-/*
-    useEffect(()=>{
-        if(notice){
-            console.log(notice);
-            const id = notice.data;
-            history.push(`/notices/${id}`);
-        }
-        if(noticeError){
-            console.log(noticeError);
-        }
-    }, [history, notice, noticeError])*/
 
     return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <EditorComponent onChangeField={onChangeField} title={title} body={body} onPublish={onPublish} onCancel={onCancel}/>

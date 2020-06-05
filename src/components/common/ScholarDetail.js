@@ -5,7 +5,7 @@ import img from '../../images/examplepic01.png';
 import { WiNightCloudyHigh } from "react-icons/wi"
 import { Button,Modal, ModalHeader, ModalBody, ModalFooter,Container, Row } from 'reactstrap';
 
-const ScholarDetail = ({ scholar, loading, user, onRemove, onEdit })=>{
+const ScholarDetail = ({ scholar, loading, user, onRemove, onEdit, onSubmit })=>{
   const [modal, setModal]=useState(false);
   const toggle=()=>setModal(!modal);
   const ScholarStyle={
@@ -55,8 +55,6 @@ if(loading || !scholar){
   return null;
 }
 
-console.log(scholar)
-
 const { scholarId, scholarName, foundation, createdDate, dueDate, sum, majorLimit, gradeLimit } = scholar;
 
 const body = `자격요건 및 세부사항\n마감날짜: ${dueDate}\n금액: ${sum}\n학기제한:${gradeLimit}\n학과:${majorLimit}`;
@@ -96,7 +94,7 @@ return(
 4. 장학금 신청 상태는 자격 미달, 산정 중, 완료(지급/지급 실패)로 나뉩니다. 신청 뒤 신청현황조회에서 확인하실 수 있습니다.
 </ModalBody>
 <ModalFooter>
- <Link to='/applies'><Button color="primary" onClick={toggle}>신청확인</Button></Link>
+ <Link to='/applies'><Button color="primary" onClick={onSubmit}>신청확인</Button></Link>
   <Button color="secondary" onClick={toggle}>취소</Button>
 </ModalFooter>
       </Modal>

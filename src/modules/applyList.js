@@ -4,11 +4,13 @@ const SET_PAGE='applyList/SET_PAGE';
 const SET_TOKEN=('applyList/SET_TOKEN');
 const NEXT_PAGE=('applyList/NEXT_PAGE');
 const PREV_PAGE=('applyList/PREV_PAGE');
+const ADD_APPLY='applyList/ADD_APPLY'
 
 export const setToken = createAction(SET_TOKEN);
 export const nextPage = createAction(NEXT_PAGE);
 export const prevPage = createAction(PREV_PAGE);
 export const setPage=createAction(SET_PAGE);
+export const addApply = createAction(ADD_APPLY);
 
 const exampleApplies=[
   {
@@ -181,6 +183,10 @@ const applies = handleActions(
             ...state,
             tempPage:state.tempPage-1,
         }),
+        [ADD_APPLY]:(state, { payload:applies})=>({
+          ...state,
+          applies,
+        })
     },
     initialState,
 );

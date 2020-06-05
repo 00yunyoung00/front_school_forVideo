@@ -8,14 +8,13 @@ import ApplyList from '../../components/student/ApplyList';
 const ApplyListContainer = ()=>{
 
     const dispatch = useDispatch();
-    const { applies, tempPage, lastPage, total, error, loading, token } = useSelector(({ applies, loading })=>({
+    const { applies, tempPage, lastPage, total, error, loading } = useSelector(({ applies, loading })=>({
         applies:applies.applies,
         tempPage:applies.tempPage,
         lastPage:applies.lastPage,
         total:applies.total,
         error:applies.error,
         loading:loading['applyList/LIST_APPLIES'],
-        token:applies.token,
     }));
 
     const toNextPage = e =>{

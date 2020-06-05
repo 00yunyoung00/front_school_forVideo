@@ -16,11 +16,9 @@ const ScholarshipList = ({ scholars, tempPage, lastPage, loading, error, nextPag
 
   if(searchWord){
     scholars=scholars.filter((scholars)=>{
-    return scholars.scholarshipName.indexOf(searchWord)>-1;
+    return scholars.scholarName.indexOf(searchWord)>-1;
     })
   }
-
-  console.log(scholars)
 
   var startIndex = (tempPage - 1) * 10 ;
   var endIndex = Math.min(startIndex + 10, total - 1);

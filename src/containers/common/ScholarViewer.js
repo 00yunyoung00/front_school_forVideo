@@ -7,20 +7,29 @@ import { setScholar } from '../../modules/scholarDetail';
 import { setOriginal } from '../../modules/school/scholarship';
 import { addScholar } from '../../modules/scholarList';
 import ScholarDetail from '../../components/common/ScholarDetail';
-import { removeScholarship } from '../../lib/api/scholar';
+import { addApply } from '../../modules/applyList';
+import { addStudent } from '../../modules/school/selection';
 
 const ScholarViewer = ({ match, history })=>{
     const scholarId  = match.params;
+    var tmpScholar=[];
     const dispatch = useDispatch();
-    const { scholarList, scholar, error, loading, user, token } = useSelector(({ scholars, scholarDetail, loading, auth })=>({
+    const { scholarList, scholar, error, loading, user, applies, students } = useSelector(({ scholars, scholarDetail, loading, auth, applies, students })=>({
         scholarList:scholars.scholars,
         scholar:scholarDetail.scholar,
         error:scholarDetail.error,
         loading:loading['scholar/READ_SCHOLAR'],
         user:auth.auth,
-        token:scholarDetail.token,
+        applies:applies.applies,
+        students:students.students
     }));
 
+    for(var i=0; i<scholarList.length; i++){
+        if(scholarList[i].scholarId===scholarId.id){
+            tmpScholar.push(scholarList[i])
+            break;
+        }
+    }
 
     useEffect(()=>{
         const tempScholar=scholarList[scholarId.id-1];
@@ -47,8 +56,22 @@ const ScholarViewer = ({ match, history })=>{
         history.push('/scholarships/new');
     }
 
+    const onSubmit = ()=>{
+        const newApply={"applyingId":`${applies[applies.length-1].applyingId+1}`,
+                        "scholarName":`${tmpScholar[0].scholarName}`, "scholarId":`${scholarId}`,
+                        "state":"applyDone", "studentName":"", "studentId":""}
+        const newStudent={"scholarId":`${scholarId.id}`,"idx":`${tmpScholar[tmpScholar.length-1].idx+1}`,
+                        "name":"new","studentId":"new","schoolName":"이화여자대학교",
+                        "completeSemester":"new", "priorGrade":"new","tution":"new","college":"new",
+                        "studentMajor":"new"};
+        students.push(newStudent);
+        applies.push(newApply);
+        dispatch(addApply(applies));
+        dispatch(addStudent(students))
+    }
+
     return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <ScholarDetail scholar={scholar} loading={loading} error={error} user={user} onRemove={onRemove} onEdit={onEdit}/></div>;
+        <ScholarDetail scholar={scholar} loading={loading} error={error} user={user} onRemove={onRemove} onEdit={onEdit} onSubmit={onSubmit}/></div>;
 };
 
 export default withRouter(ScholarViewer);

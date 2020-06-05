@@ -12,6 +12,10 @@ const SearchContainer = ({ type, onScholarClose }) => {
         possible:search.possible,
     }));
 
+    useEffect(()=>{
+        dispatch(initialize());
+    }, [dispatch]);
+
     const onChange = e =>{
         e.preventDefault();
         const { value, name } = e.target;
@@ -35,12 +39,6 @@ const SearchContainer = ({ type, onScholarClose }) => {
         const { id, name } = e.target;
         dispatch(changeCheck(id));
     }
-
-    useEffect(()=>{
-        return() => {
-            dispatch(initialize());
-        };
-    }, [dispatch]);
 
     return  <div><meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <SearchBar possible={possible} onPossibleChange={onPossibleChange} onChange={onChange} onDropChange={onDropChange} 

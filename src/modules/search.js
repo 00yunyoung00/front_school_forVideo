@@ -28,6 +28,7 @@ const initialState = {
 
 const search = handleActions(
     {
+        [INITIALIZE]:state=>initialState,
         [CHANGE_FIELD]:(state, { payload:searchWord })=>({
             ...state,
             searchWord,

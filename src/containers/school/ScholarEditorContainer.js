@@ -1,21 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeField, initialize, updateScholar, setToken } from '../../modules/school/scholarship';
+import { changeField } from '../../modules/school/scholarship';
 import { addScholar } from '../../modules/scholarList';
-//import { readScholar, unloadScholar } from '../../modules/scholarDetail';
 import FormComponent from '../../components/school/FormComponent';
 
 const ScholarEditorContainer = ({ history }) => {
     const dispatch = useDispatch();
-    const { scholars, content, scholar, scholarError, originalScholarId, originalScholar, token } = useSelector(({ scholars, Scholarship, scholarDetail })=>({
+    const { scholars, content, scholar, scholarError, originalScholarId } = useSelector(({ scholars, Scholarship, scholarDetail })=>({
         scholars:scholars.scholars,
         content:Scholarship.content,
         scholar:Scholarship.scholarship,
         scholarError:Scholarship.scholarshipError,
         originalScholarId: Scholarship.originalScholarId,
-        originalScholar: scholarDetail.scholar,
-        token:Scholarship.token,
     }));
 
      //change input handler
@@ -73,14 +70,6 @@ const ScholarEditorContainer = ({ history }) => {
             history.push('/scholarships');
         }
     }
-
-    useEffect(()=>{
-        //dispatch(readScholar(originalScholarId, token));
-        return()=>{
-            //dispatch(unloadScholar());
-        };
-    }, [dispatch, originalScholarId, token]);
-
 
     useEffect(()=>{
         if(scholar){
