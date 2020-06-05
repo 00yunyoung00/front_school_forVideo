@@ -55,7 +55,7 @@ if(loading || !notice){
 
 console.log(notice.data);
 
-const { id, author, content, title, modifiedDate } = notice.data;
+const { id, author, content, title, modifiedDate } = notice;
 //const usertype = (author.type==="ADMIN")
 const usertype=(user==="ADMIN");
 
@@ -77,7 +77,7 @@ return(
       <hr size="3" noshade></hr>
       <Row style={bodyStyle}>
         {content}
-        <img src={img}  height='auto' width='80%' style={imgStyle}/>
+        {/*<img src={img}  height='auto' width='80%' style={imgStyle}/>*/}
         </Row>
       <hr size="5" noshade></hr>
       <div style={{textAlign: 'center'}}>

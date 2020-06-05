@@ -3,35 +3,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { readNotice, unloadNotice, setToken, setId, setInfo } from '../../modules/notice';
-import { setOriginal, setInfo_update } from '../../modules/write';
+import { readNotice, unloadNotice, setToken, setId } from '../../modules/notice';
+import { setOriginal } from "../../modules/noticeList";
 import Notice from '../../components/common/NoticeDetail';
 import { removeNotice } from '../../lib/api/notice';
 
 const NoticeViewer = ({ match, history })=>{
     const noticeId  = match.params.id;
     const dispatch = useDispatch();
+    var notice;
 
-    const { id, notice, error, loading, author, token, info, info_update } = useSelector(({ notice, loading, write })=>({
-        id:notice.id,
-        notice:notice.notice,
+    const { notices, id, error, loading, author, token, info, info_update, user } = useSelector(({ notices, notice, loading, write, auth })=>({
+        notices:notices.notices,
+        //id:notice.id,
+        //notice:notice.notice,
         error:notice.error,
         loading:loading['notice/READ_NOTICE'],
         author:notice.author,
         token:notice.token,
         info:notice.info,
         info_update:write.info,
+        user:auth.auth.type,
     }));
 
+    for(var i=0; i<notices.length; i++){
+        if(notices[i].id===noticeId){
+            notice=notices[i];
+            break;
+        }
+    }
 
+    /*
     useEffect(()=>{
-        const tempuser=JSON.parse(localStorage.getItem("user"));
-        const temptoken=tempuser.data.token;
-        const tempauthor=tempuser.data.role;
-        const info={'token':temptoken, 'author':tempauthor, 'noticeId':noticeId};
-        console.log(info);
-        dispatch(setInfo(info));
-    }, [dispatch, noticeId]);
+        for(var i=0; i<notices.length; i++){
+            if(notices[i].id=noticeId){
+                notice=notices[i];
+                console.log(notices[i]);
+                break;
+            }
+        }
+    }, [dispatch, notices, noticeId]);*/
 /*
     useEffect(()=>{
         dispatch(setId(noticeId));
@@ -48,29 +59,25 @@ const NoticeViewer = ({ match, history })=>{
     }, [dispatch, info]);
 
 
-    const onRemove = async() => {
-        try{
-            console.log(noticeId);
-            console.log(info.token);
-            const temp={'id':noticeId, 'token':info.token}
-            await removeNotice(temp);
-            history.push('/notices');
-        }catch(e){
-            console.log(e)
+    const onRemove = () => {
+        for(var i=0; i<notices.length; i++){
+            if(notices[i].id===noticeId){
+                notices.splice(i,1);
+                break;
+            }
         }
+        history.push('/notices');
+
     }
 
     const onEdit = () =>{
-        const temp={'originalNotice':notice, 'author':info.author,'token':info.token }
-        console.log(temp)
-        dispatch(setInfo_update(temp));
-        console.log(info_update);
+        dispatch(setOriginal(noticeId))
         history.push('/notices/write');
     }
 
-    console.log(notice);
+    console.log(user);
 
-    return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" /><Notice notice={notice} loading={loading} error={error} user={info.author} onRemove={onRemove} onEdit={onEdit}/></div>;
+    return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" /><Notice notice={notice} loading={loading} error={error} user={user} onRemove={onRemove} onEdit={onEdit}/></div>;
 };
 
 export default withRouter(NoticeViewer);

@@ -30,7 +30,7 @@ const QuillWrapper = styled.div`
 const EditorComponent = ({ title, body, onChangeField, onPublish, onCancel }) =>{
     const quillElement = useRef(null);
     const quillInstance = useRef(null);
-
+    console.log(body)
 
     useEffect(()=>{
         quillInstance.current = new Quill(quillElement.current, {
@@ -56,9 +56,11 @@ const EditorComponent = ({ title, body, onChangeField, onPublish, onCancel }) =>
 
     const mounted = useRef(null);
     useEffect(()=>{
-        if(mounted.current) return;
+        console.log("in body")
+        //if(mounted.current) return;
         mounted.current=true;
         quillInstance.current.root.innerHTML=body;
+        console.log(body)
     }, [body]);
 
     const onChangeTitle = e =>{

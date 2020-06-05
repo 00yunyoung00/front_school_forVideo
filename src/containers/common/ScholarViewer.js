@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { setScholar } from '../../modules/scholarDetail';
 import { setOriginal } from '../../modules/school/scholarship';
+import { addScholar } from '../../modules/scholarList';
 import ScholarDetail from '../../components/common/ScholarDetail';
 import { removeScholarship } from '../../lib/api/scholar';
 
@@ -19,26 +20,26 @@ const ScholarViewer = ({ match, history })=>{
         user:auth.auth,
         token:scholarDetail.token,
     }));
-    console.log(scholarList)
 
 
     useEffect(()=>{
-        console.log(scholarList)
-        console.log(scholarId)
         const tempScholar=scholarList[scholarId.id-1];
-        console.log(tempScholar);
         dispatch(setScholar(tempScholar));
     }, [dispatch, scholarId, scholarList]);
 
-    console.log(scholar);
 
-    const onRemove = async() => {
-        try{
-            await removeScholarship(scholarId);
-            history.push('/scholarships');
-        }catch(e){
-            console.log(e)
+    const onRemove = () => {
+        console.log("in remove")
+        for(var i=0; i<scholarList.length; i++){
+            if(scholarList[i].scholarId===scholarId.id){
+                console.log(scholarList[i])
+                scholarList.splice(i,1);
+                break;
+            }
         }
+        dispatch(addScholar(scholarList));
+        history.push('/scholarships');
+
     }
 
     const onEdit = () =>{

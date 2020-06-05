@@ -2,42 +2,67 @@ import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { changeField, initialize, writeNotice, updateNotice, setToken } from '../../modules/write';
+import { changeField, initialize, writeNotice, updateNotice, setInfo } from '../../modules/write';
 import EditorComponent from '../../components/school/EditorComponent';
+import { addNotice, setOriginal } from '../../modules/noticeList';
 
 const EditorContainer = ({ history }) => {
+    const date=new Date();
+
     const dispatch = useDispatch();
-    const { title, body, notice, noticeError, originalNoticeId, author, user, token } = useSelector(({ write, auth })=>({
+    const { notices, title, body, noticeError, originalNoticeId, author, user, token } = useSelector(({ notices, write, auth })=>({
+        notices:notices.notices,
         title: write.title,
         body:write.body,
-        notice:write.notice,
+        //notice:write.notice,
         noticeError:write.noticeError,
-        originalNoticeId: write.originalNoticeId,
+        originalNoticeId: notices.originalNoticeId,
         author:write.author,
         token:write.token,
         user:auth.auth,
     }));
-    console.log(originalNoticeId);
+
+    for(var i=0; i<notices.length; i++){
+        if(notices[i].id===originalNoticeId){
+            var notice=notices[i];
+            break;
+        }
+    }
+
     const onChangeField = useCallback(payload => dispatch(changeField(payload)),[
         dispatch,
     ]);
+
+    useEffect(()=>{
+        if(originalNoticeId)
+            dispatch(setInfo(notice));
+    }, [dispatch, originalNoticeId, notice])
     
     const onPublish = () =>{
-
         if(originalNoticeId){
-            const info={'title':title, 'content':body, 'id':originalNoticeId, 'token':token};
-            dispatch(updateNotice(info));
+            const info={'title':title, 'content':body, 'id':originalNoticeId, 'author':author, 'modifiedDate':`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`};
+            for(var i=0; i<notices.length; i++){
+                if(notices[i].id===originalNoticeId){
+                    notices[i]=info;
+                    break;
+                }
+            }
+            dispatch(addNotice(notices));
+            history.push(`/notices/${originalNoticeId}`);
         }
-        const info={'title':title, 'content':body, 'author':author, 'token':token};
-        console.log(info);
-        dispatch(
-            writeNotice({
-                info
-            }),
-        );
+        const info={'id':`${parseInt(notices[notices.length-1].id)+1}`,'title':title, 'content':body, 'author':author, 'modifiedDate':`${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`};
+        if(notices){
+            notices.push(info);
+            dispatch(
+                addNotice(notices)
+            );
+            history.push(`/notices/${notices[notices.length-1].id}`);
+        }
     }
 
     const onCancel = () =>{
+        dispatch(initialize());
+        dispatch(setOriginal(null));
         if(originalNoticeId){
             history.push(`/notices/${originalNoticeId}`);
         }else{
@@ -45,14 +70,6 @@ const EditorContainer = ({ history }) => {
         }
     }
 
-    useEffect(()=>{
-        const tempuser=JSON.parse(localStorage.getItem("user"));
-        const temptoken=tempuser.data.token;
-        const tempauthor=tempuser.data.role;
-        const info={'token':temptoken, 'author':tempauthor};
-        console.log(info);
-        dispatch(setToken(info));
-    }, [dispatch], !originalNoticeId);
 
     /*
     useEffect(()=>{
@@ -61,7 +78,7 @@ const EditorContainer = ({ history }) => {
         };
     }, [dispatch, token]);*/
     
-
+/*
     useEffect(()=>{
         if(notice){
             console.log(notice);
@@ -71,7 +88,7 @@ const EditorContainer = ({ history }) => {
         if(noticeError){
             console.log(noticeError);
         }
-    }, [history, notice, noticeError])
+    }, [history, notice, noticeError])*/
 
     return <div><meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <EditorComponent onChangeField={onChangeField} title={title} body={body} onPublish={onPublish} onCancel={onCancel}/>

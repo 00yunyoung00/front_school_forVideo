@@ -20,13 +20,15 @@ const ScholarshipList = ({ scholars, tempPage, lastPage, loading, error, nextPag
     })
   }
 
+  console.log(scholars)
+
   var startIndex = (tempPage - 1) * 10 ;
   var endIndex = Math.min(startIndex + 10, total - 1);
-  
+
     const scholarList = scholars.slice(startIndex, endIndex).map((scholars, index)=>(
-      <tr key={scholars.id}>
-        <th style={{width:'50px'}} scope="row">{scholars.scholarshipId}</th>
-        <td style={{width:'1000px'}} ><Link to={`/scholarships/${scholars.id}`}><a style={{color:'black'}}>{scholars.scholarshipName}</a></Link></td>
+      <tr key={scholars.scholarId}>
+        <th style={{width:'50px'}} scope="row">{scholars.scholarId}</th>
+        <td style={{width:'1000px'}} ><Link to={`/scholarships/${scholars.scholarId}`}><a style={{color:'black'}}>{scholars.scholarName}</a></Link></td>
       </tr>
     ));
 

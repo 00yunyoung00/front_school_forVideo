@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeField, initialize, addScholar, updateScholar, setToken } from '../../modules/school/scholarship';
+import { changeField, initialize, updateScholar, setToken } from '../../modules/school/scholarship';
+import { addScholar } from '../../modules/scholarList';
 //import { readScholar, unloadScholar } from '../../modules/scholarDetail';
 import FormComponent from '../../components/school/FormComponent';
 
 const ScholarEditorContainer = ({ history }) => {
     const dispatch = useDispatch();
-    const { content, scholar, scholarError, originalScholarId, originalScholar, token } = useSelector(({ Scholarship, scholarDetail })=>({
+    const { scholars, content, scholar, scholarError, originalScholarId, originalScholar, token } = useSelector(({ scholars, Scholarship, scholarDetail })=>({
+        scholars:scholars.scholars,
         content:Scholarship.content,
         scholar:Scholarship.scholarship,
         scholarError:Scholarship.scholarshipError,
-        originalScholarId: Scholarship.originalScholarshipId,
+        originalScholarId: Scholarship.originalScholarId,
         originalScholar: scholarDetail.scholar,
         token:Scholarship.token,
     }));
@@ -26,20 +28,40 @@ const ScholarEditorContainer = ({ history }) => {
             })
         );
     };
+
+    console.log(originalScholarId)
     
     const onPublish = () =>{
-        const check = (content.scholarshipName==="" ||content.maturityDateTime===""||content.facevalue===""||content.totalNum==="")
+        const check = (content.scholarName==="" ||content.dueDate===""||content.sum===""||content.num==="")
         if(check){
             alert("필수 입력란을 모두 채워주세요");
         }else{
             if(originalScholarId){
-                dispatch(updateScholar({originalScholarId, content, token}));
+                const info={"scholarId":`${originalScholarId}`, "scholarName":`${content.scholarName}`,
+                        "foundation":`${content.foundation}`, "sum":`${content.sum}`,
+                        "num":`${content.num}`,"dueDate":`${content.dueDate}`,"semesterStart":`${content.semesterStart}`,
+                        "semesterEnd":`${content.semesterEnd}`,"gradeLimit":`${content.gradeLimit}`, "majorLimit":`${content.majorLimit}`}
+                if(scholars){
+                        for(var i=0; i<scholars.length; i++){
+                            if(scholars[i].scholarId===originalScholarId){
+                                scholars[i]=info;
+                                console.log(scholars[i]);
+                                break;
+                            }
+                        }
+                        console.log(scholars)
+                        dispatch(addScholar(scholars));
+                }
+            }else{
+                const info={"scholarId":`${parseInt(scholars[scholars.length-1].scholarId)+1}`, "scholarName":`${content.scholarshipName}`,
+                        "foundation":"", "sum":`${content.sum}`,"dueDate":`${content.dueDate}`,"semesterStart":`${content.semesterStart}`,
+                        "semesterEnd":`${content.semesterEnd}`,"majorLinit":"","gradeLimit":`${content.gradeLimit}`}
+                if(scholars){
+                    scholars.push(info);
+                    dispatch(addScholar(scholars));
+                }
             }
-            dispatch(
-               addScholar({
-                 content, token
-               }),
-            ); 
+            
             history.push('/selections');
         }
     }
@@ -51,20 +73,6 @@ const ScholarEditorContainer = ({ history }) => {
             history.push('/scholarships');
         }
     }
-
-    useEffect(()=>{
-        const tempuser=JSON.parse(localStorage.getItem("user"));
-        const temptoken=tempuser.data.token;
-        const tempauthor=tempuser.data.role;
-        console.log(temptoken);
-        dispatch(setToken(temptoken, tempauthor));
-    }, [dispatch]);
-
-    useEffect(()=>{
-        return() => {
-            dispatch(initialize());
-        };
-    }, [dispatch, token]);
 
     useEffect(()=>{
         //dispatch(readScholar(originalScholarId, token));
@@ -84,7 +92,7 @@ const ScholarEditorContainer = ({ history }) => {
         }
     }, [history, scholar, scholarError])
 
-    return <FormComponent onChange={onChange} content={content} onPublish={onPublish} onCancel={onCancel} originalScholar={originalScholar}/>;
+    return <FormComponent onChange={onChange} content={content} onPublish={onPublish} onCancel={onCancel} originalScholar={originalScholarId}/>;
 }
 
 export default ScholarEditorContainer;

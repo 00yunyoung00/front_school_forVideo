@@ -13,7 +13,7 @@ const [UPDATE_NOTICE, UPDATE_NOTICE_SUCCESS, UPDATE_NOTICE_FAILURE] = createRequ
 
 export const initialize = createAction(INITIALIZE);
 export const setToken = createAction(SET_TOKEN, info=>info);
-export const setInfo_update = createAction(SET_INFO, info=>info);
+export const setInfo = createAction(SET_INFO, info=>info);
 export const changeField = createAction(CHANGE_FIELD, ({ key, value })=>({
     key,
     value,
@@ -51,18 +51,17 @@ var initialState = {
 
 const write = handleActions(
     {
-        //[INITIALIZE]:state=>initialState,
+        [INITIALIZE]:state=>initialState,
         [SET_TOKEN]:(state,{ payload:info })=>({
             ...state,
             token:info.token,
             author:info.author,
         }),
-        [SET_INFO]:(state, { payload:info })=>({
+        [SET_INFO]:(state, { payload:original })=>({
             ...state,
-            token:info.token,
-            title:info.originalNotice.data.title,
-            body:info.originalNotice.content,
-            author:info.originalNotice.data.author,
+            title:original.title,
+            body:original.content,
+            author:original.author,
         }),
         [CHANGE_FIELD]:(state, { payload: { key, value } }) => ({
             ...state,

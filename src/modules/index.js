@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux';
-import { all } from 'redux-saga/effects';
 import auth from './auth';
 import loading from './loading'
 import register from './register'
-import notice, { noticeSaga } from './notice';
-import notices, { noticesSaga } from './noticeList';
+import notice from './notice';
+import notices from './noticeList';
 import applies from './applyList';
-import applyDetail, { applyDetailSaga } from './applyDetail';
-import write, { writeSaga } from './write';
+import applyDetail from './applyDetail';
+import write from './write';
 import scholars from './scholarList';
 import scholarDetail from './scholarDetail';
 import Scholarship from './school/scholarship';
@@ -30,8 +29,5 @@ const rootReducer = combineReducers({
     search,
 });
 
-export function* rootSaga(){
-    yield all([ writeSaga(), noticeSaga(), noticesSaga(), applyDetailSaga(), ]);
-}
 
 export default rootReducer;

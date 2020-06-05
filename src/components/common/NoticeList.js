@@ -14,8 +14,6 @@ const NoticeList = ({ notices, tempPage, lastPage, loading, error, prevPage, nex
     return null;
   }
 
-  notices=notices.list;
-
   if(searchWord){
     notices=notices.filter((notices)=>{
     return notices.title.indexOf(searchWord)>-1;
@@ -42,7 +40,7 @@ const NoticeList = ({ notices, tempPage, lastPage, loading, error, prevPage, nex
     padding:'auto',
   }
 
-  const usertype = (user.role==="ADMIN")
+  const usertype = (user==="ADMIN")
 
 
   return(
@@ -65,7 +63,7 @@ const NoticeList = ({ notices, tempPage, lastPage, loading, error, prevPage, nex
       </Table>
       <div style={{textAlign: 'right'}}>
         {
-          !usertype &&
+          usertype &&
           <Link to='/notices/write'><Button style={buttonStyle} outline color="secondary">공지등록</Button></Link>
         }
       </div>

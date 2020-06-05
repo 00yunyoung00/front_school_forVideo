@@ -28,10 +28,12 @@ const StudentDetail = ({ student, loading, scholarId }) =>{
             <Table borderless size="sm">
                     <thead>
                         <tr>
-                            <th>신청번호 {student.studentId}</th>
+                            <th>학번 {student.studentId}</th>
                             <th>{student.name} 학생</th>
-                            <th>{student.university} 학교</th>
-                            <th>{student.grade}/4.3</th>
+                            <th>{student.schoolName}</th>
+                            <th>{student.college}</th>
+                            <th>{student.studentMajor}</th>
+                            <th>{student.priorGrade}/4.3</th>
                             <th>등록금 : {student.tution}</th>
                         </tr>
                     </thead>

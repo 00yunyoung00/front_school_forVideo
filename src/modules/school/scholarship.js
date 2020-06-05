@@ -30,20 +30,19 @@ export function* ScholarSaga(){
 
 const initialState = {
     content:{
-        scholarshipName:'',
-        semester:'',
-        maturityDateTime:'',
+        scholarName:'',
+        semesterStart:'',
+        semesterEnd:'',
+        dueDate:'',
         foundation:'',
-        faceValue:'',
-        semesterLimitMin:'',
-        semesterLimitMax:'',
+        sum:'',
+        num:'',
         gradeLimit:'',
         majorLimit:'',
-        totalNum:'',
     },
     scholarship:null,
     scholarshipError:null,
-    originalScholarshipId:null,
+    originalScholarId:null,
     token:null,
 };
 
@@ -71,11 +70,10 @@ const Scholarship = handleActions(
             ...state,
             scholarshipError,
         }),
-        [SET_ORIGINAL]:(state, { payload:originalScholarship })=>({
+        [SET_ORIGINAL]:(state, { payload:original })=>({
             ...state,
-            title:originalScholarship.title,
-            body:originalScholarship.body,
-            originalScholarshipId:originalScholarship.id,
+            originalScholarId:original.scholarId,
+            content:original,
         }),
         [UPDATE_SCHOLAR_SUCCESS]: (state, { payload: scholarship })=>({
             ...state,
